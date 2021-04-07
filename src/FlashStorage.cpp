@@ -79,11 +79,29 @@ void FlashClass::write(const volatile void *flash_ptr, const void *data, uint32_
 void FlashClass::erase(const volatile void *flash_ptr, uint32_t size)
 {
   const uint8_t *ptr = (const uint8_t *)flash_ptr;
+
   while (size > ROW_SIZE) {
     erase(ptr);
     ptr += ROW_SIZE;
     size -= ROW_SIZE;
   }
+
+  erase(ptr);
+}
+
+void FlashClass::eraseOneLess(const volatile void *flash_ptr, uint32_t size)
+{
+  size -= ROW_SIZE;
+
+  const uint8_t *ptr = (const uint8_t *)flash_ptr;
+
+  while (size > ROW_SIZE) {
+
+    erase(ptr);
+    ptr += ROW_SIZE;
+    size -= ROW_SIZE;
+  }
+
   erase(ptr);
 }
 

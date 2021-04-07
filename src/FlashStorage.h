@@ -41,10 +41,12 @@ public:
 
   void write(const void *data) { write(flash_address, data, flash_size); }
   void erase()                 { erase(flash_address, flash_size);       }
+  void eraseHalf()             { eraseOneLess(flash_address, flash_size);       }
   void read(void *data)        { read(flash_address, data, flash_size);  }
 
   void write(const volatile void *flash_ptr, const void *data, uint32_t size);
   void erase(const volatile void *flash_ptr, uint32_t size);
+  void eraseOneLess(const volatile void *flash_ptr, uint32_t size);
   void read(const volatile void *flash_ptr, void *data, uint32_t size);
 
 private:
@@ -63,6 +65,10 @@ public:
   // Write data into flash memory.
   // Compiler is able to optimize parameter copy.
   inline void write(T data)  { flash.erase(); flash.write(&data); }
+
+  inline void erase(T data)  { flash.erase();}
+
+  inline void eraseOnePageLess(T data)  { flash.eraseHalf();}
 
   // Read data from flash into variable.
   inline void read(T *data)  { flash.read(data); }
