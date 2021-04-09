@@ -48,6 +48,7 @@ public:
   void erase(const volatile void *flash_ptr, uint32_t size);
   void eraseOneLess(const volatile void *flash_ptr, uint32_t size);
   void read(const volatile void *flash_ptr, void *data, uint32_t size);
+  const volatile void *getFlashAddress(){ return flash_address;}
 
 private:
   void erase(const volatile void *flash_ptr);
@@ -76,6 +77,8 @@ public:
   // Overloaded version of read.
   // Compiler is able to optimize copy-on-return.
   inline T read() { T data; read(&data); return data; }
+
+  T* getFlashAddress(){ return (T*) flash.getFlashAddress();}
 
 private:
   FlashClass flash;
