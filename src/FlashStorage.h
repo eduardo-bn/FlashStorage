@@ -65,11 +65,11 @@ public:
 
   // Write data into flash memory.
   // Compiler is able to optimize parameter copy.
-  inline void write(T data)  { flash.erase(); flash.write(&data); }
+  inline void write(T *data)  { flash.erase(); flash.write(data); }
 
-  inline void erase(T data)  { flash.erase();}
+  inline void erase(T *data)  { flash.erase();}
 
-  inline void eraseOnePageLess(T data)  { flash.eraseHalf();}
+  inline void eraseOnePageLess(T *data)  { flash.eraseHalf();}
 
   // Read data from flash into variable.
   inline void read(T *data)  { flash.read(data); }
